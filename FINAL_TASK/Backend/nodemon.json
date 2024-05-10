@@ -1,0 +1,5 @@
+{
+  "exec": "npm run start-n",
+  "watch": ["src", "config"],
+  "ext": "ts,json"
+}
