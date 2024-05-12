@@ -1,0 +1,54 @@
+{
+    "cors": {
+        "debug": false,
+        "sites": [
+            "http://localhost:4200",
+            "http://localhost:3000"
+        ]
+    },
+    "db": {
+        "name": "mysql-test",
+        "options": {
+            "host": "3.7.232.107",
+            "port": "3306",
+            "user": "user",
+            "password": "password",
+            "database": "new_database"
+        }
+    },
+    "mongodb": {
+        "name": "mongoose-test",
+        "url": "mongodb://localhost:27017/starterkitdb",
+        "options": {
+            "auth": {
+                "username": "test",
+                "password": "test"
+            },
+            "dbName": "test"
+        }
+    },
+    "common": {
+        "accessKey": "kjhfhhewejhehbdbdaqTYYGF",
+        "accessTimeout": "1 hour",
+        "refreshKey": "ihgfiuhhifhhhirhhihhhiiurg",
+        "refreshTimeout": "4 days"
+    },
+    "emailer": {
+        "name": "emailer-test",
+        "from": "passboltamazecodes@gmail.com",
+        "options": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "secure": false,
+            "auth": {
+                "user": "passboltamazecodes@gmail.com",
+                "pass": "qgrggewrsidztzcd"
+            }
+        }
+    },
+    "uploadedFiles": {
+        "dir": "files",
+        "base": "cwd",
+        "info": "'cwd' and 'abs' are the two only options to base now"
+    }
+}

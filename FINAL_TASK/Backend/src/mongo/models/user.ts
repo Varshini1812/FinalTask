@@ -12,6 +12,8 @@ export function initUserSchema() {
             userName: String,
             phone: { type: String, unique: true },
             email: { type: String, unique: true },
+            gender: { type: String, enum: ['male', 'female', 'others'] }, 
+            age: Number, 
             info: Object,
             password: String,
             token: String,

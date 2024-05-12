@@ -1,0 +1,46 @@
+
+<app-header></app-header>
+<!-- product-list.component.html -->
+<hr>
+<div class="container">
+  
+  <div>
+   
+    <ul class="d-flex">
+      <li *ngFor="let category of categories">
+        <a href="#">{{ category }}</a>
+      </li>
+    </ul>
+  </div>
+
+  
+
+  <div class="d-flex">
+   
+    <input type="text" placeholder="Search products...">
+    <button (click)="openProductAddDialog()" mat-raised-button color="primary">Add Product</button>
+  </div>
+
+  <div>
+    <h3>Filters</h3>
+    <!-- Include filter options here -->
+    <!-- Example: -->
+    <label>Brand:</label>
+    <input type="text">
+    <label>Ratings:</label>
+    <input type="number">
+    <!-- Add more filter options as needed -->
+  </div>
+
+  <div>
+    <!-- Product list display -->
+    
+  </div>
+
+ 
+</div>
+
+
+
+
+<app-footer></app-footer>

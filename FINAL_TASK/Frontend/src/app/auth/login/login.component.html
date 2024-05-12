@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center vh-100">
+        <div class="card bg-transparent col-md-8 col-lg-6 col-sm-10 col-xs-10 py-3 shadow px-3">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-3 font-monospace fs-2">Hello</h1>
+                <h4 class="card-title text-center mb-4 font-monospace fs-4">We are happy to have you back</h4>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="mb-3 ">
+                        <div class="mb-2 position-relative">
+                            <input type="email" class="form-control py-3 rounded-pill font-monospace fs-5"
+                            formControlName="email" placeholder="Enter your email address" required>
+                        <i class='bx bxs-user position-absolute p-3 end-0 fs-3'></i>
+                        </div>
+                        
+                        <div *ngIf="loginForm?.get('email')?.invalid && (loginForm?.get('email')?.dirty || loginForm?.get('email')?.touched)" class="text-danger fs-5">Please enter a valid email address.</div>
+                    </div>
+                    <div class="mb-3 ">
+                        <div class="mb-2 position-relative">
+                            <input type="password" class="form-control py-3 rounded-pill font-monospace fs-5"
+                            formControlName="password" placeholder="Password" required>
+                        <i class='bx bxs-lock-alt position-absolute p-3 end-0 fs-3 '></i>
+                        </div>
+                        
+                        <div *ngIf="loginForm?.get('password')?.invalid && (loginForm?.get('password')?.dirty || loginForm?.get('password')?.touched)" class="text-danger fs-5">Password must contains atleast 1 lower and upper case, digits, and special characters.</div>
+                    </div>
+                    
+
+                    
+                    <div *ngIf="errorMessage" class="text-danger fs-3 font-monospace mb-3">{{ errorMessage }}</div>
+
+                    <div class="mb-5 d-flex justify-content-between">
+                        <label for="rememberme" id="rememberme"
+                            class="remember fs-6 font-monospace"><input type="checkbox" id="rememberme" class="mr-2">Remember
+                            me</label>
+                        <a routerLink="/auth/forgot-password" class="fs-6 font-monospace">Forgot password</a>
+                    </div>
+                    <div class="mb-2 button">
+                        <button type="submit"
+                            class="btn btn-primary d-block mx-auto px-4 py-2 w-100">Login</button>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <i class='bx bxl-google position-absolute p-3 fs-3'></i>
+                        <button class="fs-6 font-monospace px-3 py-3 w-100 border-0">Log in with Google</button>
+                    </div>
+                    <div>
+                        <label for="signup" class="font-monospace fs-6">Don't have an account? <a
+                            routerLink="/auth/signin">Sign In</a></label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

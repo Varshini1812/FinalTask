@@ -1,7 +1,9 @@
 {
   "include": [
     "src/**/*",
-    "build/**/*"
+    "build/**/*",
+    "src/**/*.ts",
+    "models/**/*"
   ],
   "exclude": [
     "node_modules",

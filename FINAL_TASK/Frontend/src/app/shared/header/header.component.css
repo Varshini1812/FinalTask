@@ -1,0 +1,49 @@
+.navbar-brand{
+  color:#f36127;
+  font-weight:500;
+
+}
+
+.navbar-brand img{
+   max-width:30%;
+   height: auto;
+}
+.nav-link:hover{
+  color:black
+}
+
+.navbar-nav .nav-item .nav-link {
+  position: relative;
+  font-weight: 500;
+}
+
+.navbar-nav .nav-item .nav-link::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  background-color: #f36127;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease-in-out; 
+}
+
+.navbar-nav .nav-item .nav-link:hover::before,
+.navbar-nav .nav-item .nav-link.active::before {
+  width: 100%;
+}
+
+
+
+.sign-in-popup-dialog {
+  max-height: 100vh; 
+}
+
+.mat-mdc-dialog-surface {
+  max-height: 80vh; 
+}
+
+.dropdown-menu .dropdown-item:hover {
+  color: orange;
+}

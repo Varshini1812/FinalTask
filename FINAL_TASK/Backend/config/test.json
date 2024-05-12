@@ -18,13 +18,13 @@
     },
     "mongodb": {
         "name": "mongoose-test",
-        "url": "mongodb://localhost:27017/starterkitdb",
+        "url": "mongodb://0.0.0.0:27017/Ecommerce",
         "options": {
             "auth": {
-                "username": "test",
-                "password": "test"
+                "username": "",
+                "password": ""
             },
-            "dbName": "test"
+            "dbName": "Ecommerce"
         }
     },
     "common": {
@@ -35,14 +35,14 @@
     },
     "emailer": {
         "name": "emailer-test",
-        "from": "passboltamazecodes@gmail.com",
+        "from": "t3421420@gmail.com",
         "options": {
             "host": "smtp.gmail.com",
             "port": 587,
             "secure": false,
             "auth": {
-                "user": "passboltamazecodes@gmail.com",
-                "pass": "qgrggewrsidztzcd"
+                "user": "t3421420@gmail.com",
+                "pass": "usjj imwz neis fwjv"
             }
         }
     },

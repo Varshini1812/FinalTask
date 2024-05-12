@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row d-flex justify-content-center align-items-center vh-100">
+    <div class="card bg-transparent col-md-8 col-lg-7 col-sm-12 col-xs-12  py-3 shadow px-3">
+      <div class="card-body">
+        <h1 class="card-title text-center mb-3">Welcome</h1>
+        <h5 class="card-subtitle font-monospace text-center fs-5 mb-3">Already a member? <a
+            routerLink="/auth/login">Login</a></h5>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3 position-relative">
+            <input type="text" class="form-control py-3 rounded-pill font-monospace fs-5" id="userName" name="userName"
+              formControlName="userName" placeholder="Enter your username" required>
+            <i class='bx bxs-user position-absolute p-3 end-0 fs-3'></i>
+            <div
+              *ngIf="registerForm?.get('username')?.invalid && (registerForm?.get('username')?.dirty || registerForm?.get('username')?.touched)"
+              class="text-danger">Username must starts with UpperCase</div>
+          </div>
+
+          <div class="mb-3 position-relative">
+            <input type="email" class="form-control py-3 rounded-pill font-monospace fs-5" id="email" name="email"
+              formControlName="email" placeholder="Enter your email address" required>
+            <i class='bx bxs-envelope position-absolute p-3 end-0 fs-3'></i>
+            <div
+              *ngIf="registerForm?.get('email')?.invalid && (registerForm?.get('email')?.dirty || registerForm?.get('email')?.touched)"
+              class="text-danger">Please enter a valid email address.</div>
+          </div>
+
+          <div class="mb-3 position-relative">
+            <input type="tel" class="form-control py-3 rounded-pill font-monospace fs-5" id="phone" name="phone"
+              formControlName="phone" placeholder="Enter your phone number" required>
+            <i class='bx bxs-phone position-absolute p-3 end-0 fs-3'></i>
+            <div
+              *ngIf="registerForm?.get('phone')?.invalid && (registerForm?.get('phone')?.dirty || registerForm?.get('phone')?.touched)"
+              class="text-danger">10 digits required.</div>
+          </div>
+
+          <div class="mb-3 position-relative">
+
+            <input type="number" formControlName="age" name="age" placeholder="Enter your age"
+              class="form-control py-3 rounded-pill font-monospace fs-5" required>
+            <div
+              *ngIf="registerForm?.get('age')?.invalid && (registerForm?.get('age')?.dirty || registerForm?.get('age')?.touched)"
+              class="text-danger">Please enter your age.</div>
+          </div>
+
+          <div class="mb-3 ml-2 position-relative d-flex align-items-center gap-5">
+            <label for="gender" class="form-label font-monospace fs-5 ">Gender</label>
+            <div class="d-flex gap-3">
+              <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                class="mr-1 font-monospace fs-5"> Male
+              <input type="radio" id="female" name="gender" value="female" formControlName="gender"
+                class="mr-1 font-monospace fs-5"> Female
+              <input type="radio" id="others" name="gender" value="others" formControlName="gender"
+                class="mr-1 font-monospace fs-5"> Others
+            </div>
+          </div>
+
+          <div class="row mb-3 position-relative ">
+            <div class="col-lg-6 col-12 ">
+              <input type="password" class="form-control py-3 rounded-pill font-monospace fs-5" id="password"
+                name="password" formControlName="password" placeholder="Password" required>
+              <i class='bx bxs-lock-alt position-absolute p-3 end-0 fs-3'></i>
+              <div
+                *ngIf="registerForm?.get('password')?.invalid && (registerForm?.get('password')?.dirty || registerForm?.get('password')?.touched)"
+                class="text-danger">{{ passwordErrorMessage }}</div>
+            </div>
+            <div class="col-lg-6 col-12  mt-xs-3 mt-sm-3 mt-md-3 mt-lg-0">
+              <input type="password" class="form-control py-3 rounded-pill font-monospace fs-5" id="confirmpassword"
+                formControlName="confirmpassword" name="confirmpassword" placeholder="Confirm your Password">
+              <i class='bx bxs-lock-alt position-absolute p-3 end-0 fs-3'></i>
+              <div
+                *ngIf="registerForm?.get('confirmpassword')?.invalid && (registerForm?.get('confirmpassword')?.dirty || registerForm?.get('confirmpassword')?.touched)"
+                class="text-danger">Passwords do not match.</div>
+            </div>
+
+
+
+          </div>
+          <div class="d-flex justify-content-center gap-4">
+            <button mat-flat-button color="primary" type="submit" [disabled]="registerForm.invalid">Sign In</button>
+            <button mat-flat-button color="warn" mat-dialog-close>Cancel</button>
+          </div>
+
+
+
+        </form>
+      </div>
+    </div>
+  </div>

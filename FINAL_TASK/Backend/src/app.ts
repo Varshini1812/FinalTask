@@ -8,19 +8,20 @@ import { nocache } from "./utils/nocache";
 import { RegisterClasses } from "./utils/general";
 
 export const app = express();
-
+const config = require('config');
 app.use(helmet());
 app.use(nocache());
 useCors(app);
 setUpMorgan(app);
-// Use body parser to read sent json payloads
+
 app.use(
     bodyParser.urlencoded({
         extended: true,
     })
 );
 app.use(bodyParser.json());
-
+const corsSites = config.get('cors.sites');
+console.log(corsSites); 
 RegisterClasses();
 
 RegisterRoutes(app);

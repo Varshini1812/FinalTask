@@ -1,0 +1,41 @@
+<!-- AddNewProductDialogComponent HTML -->
+<div class="container p-5">
+  <h2>Add New Product</h2>
+  <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+    <div class="mb-3">
+      <label for="productName" class="form-label">Product Name</label>
+      <input type="text" class="form-control" id="productName" formControlName="productName">
+    </div>
+
+    <div class="mb-3">
+      <label for="productImage" class="form-label">Product Image</label>
+      <input type="file" class="form-control" id="productImage" formControlName="productImage">
+    </div>
+    <div class="mb-3">
+      <label for="productCategory" class="form-label">Category</label>
+      <input type="text" class="form-control" id="productCategory" formControlName="productCategory">
+    </div>
+
+    <div class="mb-3">
+      <label for="productBrand" class="form-label">Brand Name</label>
+      <input type="text" class="form-control" id="productBrand" formControlName="productBrand">
+    </div>
+
+    <div class="mb-3">
+      <label for="productPrice" class="form-label">Price</label>
+      <input type="number" class="form-control" id="productPrice" formControlName="productPrice">
+    </div>
+
+    <div class="mb-3">
+      <label for="productRatings" class="form-label">Ratings</label>
+      <input type="number" class="form-control" id="productRatings" formControlName="productRatings">
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button type="submit">Add Product</button>
+    </mat-dialog-actions>
+  </div>
+  </form>
+</div>

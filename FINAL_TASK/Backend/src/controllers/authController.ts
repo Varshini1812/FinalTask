@@ -17,6 +17,8 @@ import { md5 } from "../utils/md5";
 import { randomInt } from "crypto";
 import { sendEmail } from "../utils/emailer";
 
+
+
 @Route("auth")
 export class AuthController extends Controller {
     constructor(@Inject private repo: UserRepository) { super(); }
@@ -25,25 +27,30 @@ export class AuthController extends Controller {
     @SuccessResponse(200, "Success")
     @Response(400, "Invalid login")
     public async Login(
-        @Body() login: { password: string, userName: string })
-        : Promise<{ accessToken: string | null, refreshToken: string | null }> {
-        let user = await this.repo.getByEmailWithSensitiveInfo(login.userName);
-        if (user && md5(login.password) == user.password) {
-            return {
-                accessToken: jwt.sign({ userid: user.userId, scope: ["user"], name: user.userName },
-                    config.get("common.accessKey"),
-                    {
-                        expiresIn: config.get("common.accessTimeout")
-                    }),
-                refreshToken: jwt.sign({ userid: user.userId, scope: ["api"] },
-                    config.get("common.refreshKey"),
-                    {
-                        expiresIn: config.get("common.refreshTimeout")
-                    })
-            };
+        @Body() login: { password: string, email: string , rememberMe?: boolean})
+        : Promise<{ accessToken: string | null, refreshToken: string | null , username:string | null }> {
+        let user = await this.repo.getByEmailWithSensitiveInfo(login.email);
+        let username= user?.userName ?? null;
+        if (user && md5(login.password) === user.password) {
+            // Generate tokens
+            const accessToken = jwt.sign({ userid: user.userId, scope: ["user"], name: user.userName },
+                config.get("common.accessKey"),
+                { expiresIn: config.get("common.accessTimeout") });
+            const refreshToken = jwt.sign({ userid: user.userId, scope: ["api"] },
+                config.get("common.refreshKey"),
+                { expiresIn: config.get("common.refreshTimeout") });
+        
+          
+            if (user.userId) {
+                // Store refresh token in the database
+                await this.repo.storeRefreshToken(user.userId, refreshToken);
+            }
+        
+            // Return tokens to the client
+            return { accessToken, refreshToken, username };
         }
         this.setStatus(400);
-        return { accessToken: null, refreshToken: null }
+        return { accessToken: null, refreshToken: null,username:null }
     }
     @Post("refresh-token")
     @SuccessResponse(200, "Success")
@@ -90,35 +97,80 @@ export class AuthController extends Controller {
         if (user != null) {
             let token = randomInt(100000, 999999);
             await this.repo.updateToken(user.userId || "-100", md5(token.toString()));
+            const resetLink = `http://localhost:4200/reset-password?token=${token}`;
+
+    
+            // Construct the email body with the reset link
+            const emailBody = `Click the following link to reset your password: ${resetLink}`;
+    
+            // Send the email to the user's email address
             await sendEmail({
                 to: data.email,
-                subject: "Starter Kit Site Password Change",
-                text: "Token is : " + token.toString(),
+                subject: "Password Reset Request",
+                text: emailBody, // Include the email body with the reset link
                 from: config.get("emailer.from")
             });
             return { success: true }
         }
         return { success: false }
     }
+
+   
     @Post("change-password-step2")
     @SuccessResponse(200, "Success")
-    public async ChangePasswordStep2(@Body() data: { email: string, token: string, password: string })
-        : Promise<{ success: boolean }> {
+    // public async ChangePasswordStep2(@Body() data: { token: string, password: string })
+    //     : Promise<{ success: boolean }> {
+    //     let result = { success: false };
+    //     if (data.password) {
+    //         let user = await this.repo.getByEmailWithSensitiveInfo(data.token);
+    //         if (user != null) {
+    //             let token = md5(data.token);
+    //             if (token == user.token) {
+    //                 user.password = md5(data.password);
+                    
+    //                 user.token = null;
+    //                 user.tokenDate = null;
+    //                 await this.repo.update(user);
+    //                 result.success = true;
+    //             }
+    //         }
+    //     }
+    //     return result
+    // }
+
+    public async ChangePasswordStep2(@Body() data: { token: string, password: string }): Promise<{ success: boolean }> {
         let result = { success: false };
+        
+        
+    
         if (data.password) {
-            let user = await this.repo.getByEmailWithSensitiveInfo(data.email);
+            const token=md5(data.token)
+            console.log("token:",token)
+            let user = await this.repo.getByTokenWithSensitiveInfo(token);
+            
+            
+    
             if (user != null) {
-                let token = md5(data.token);
+               
+                
+                
+    
                 if (token == user.token) {
                     user.password = md5(data.password);
+                    
+                    
+    
                     user.token = null;
                     user.tokenDate = null;
                     await this.repo.update(user);
+    
+                    
+    
                     result.success = true;
                 }
             }
         }
-        return result
+        return result;
     }
 
     @Security("bearer", ["user"])
@@ -148,4 +200,8 @@ export class AuthController extends Controller {
         }
         return result
     }
+
+
+   
 }
+        

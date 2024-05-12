@@ -13,6 +13,7 @@ import {
 import { Inject } from 'typescript-ioc'
 import { UserErrorType, UserModel } from "../models/user";
 import { UserRepository } from "../repo-base/user-repository";
+import { MD5 } from 'crypto-js';
 
 @Route("users")
 export class UserController extends Controller {
@@ -38,17 +39,42 @@ export class UserController extends Controller {
         return x as UserModel;
     }
 
+    
+
+
     @Post()
     @SuccessResponse(201, "Created")
     @Response(409, "Already exists")
-    public async Create(@Body() user: UserModel): Promise<UserModel | UserErrorType> {
-        let x: UserModel | null = await this.repo!.create(user);
-        if (x == null) {
+    public async Create(@Body() user: UserModel): Promise<{ user: UserModel; accessToken: string; refreshToken: string } | UserErrorType> {
+        // Generate JWT tokens
+        const { accessToken, refreshToken } = this.repo!.generateTokens(user);
+    
+        
+        // const userWithTokens = { ...user, accessToken, refreshToken };
+    
+       
+        const encryptedPassword = MD5(user.password).toString();
+        const userWithEncryptedPassword = { ...user, password: encryptedPassword };
+    
+        // Check if the user already exists
+        let existingUser: UserModel | null = await this.repo!.findByEmail(user.email);
+        if (existingUser) {
             this.setStatus(409);
-            return { message: "Already exists" }
+            return { message: "User already exists" };
         }
-        return x as UserModel;
+    
+        
+        let createdUser: UserModel | null = await this.repo!.create(userWithEncryptedPassword);
+        if (!createdUser) {
+            this.setStatus(500); // Internal server error
+            return { message: "Failed to create user" };
+        }
+    
+       
+        return { user: createdUser, accessToken, refreshToken };
     }
+    
+    
     @Put("{userId}")
     @SuccessResponse(201, "Created")
     @Response(404, "Not found")
@@ -66,4 +92,5 @@ export class UserController extends Controller {
         }
         return x as UserModel;
     }
+   
 }
