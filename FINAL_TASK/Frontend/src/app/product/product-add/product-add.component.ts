@@ -16,7 +16,7 @@ export class ProductAddComponent {
       productBrand: ['', Validators.required],
       productCategory:['', Validators.required],
       productPrice: ['', [Validators.required, Validators.min(0)]],
-      productRatings: ['', [Validators.required, Validators.min(0), Validators.max(5)]]
+      productRatings: ['', [Validators.required, Validators.min(0), Validators.max(10)]]
     });
   }
 

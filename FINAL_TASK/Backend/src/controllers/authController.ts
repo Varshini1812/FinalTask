@@ -55,30 +55,37 @@ export class AuthController extends Controller {
     @Post("refresh-token")
     @SuccessResponse(200, "Success")
     @Response(400, "Invalid request")
-    public async Refresh(@Body() refresh: { refreshToken: string })
-        : Promise<{ accessToken: string | null, refreshToken: string | null }> {
-
-        let decoded = jwt.verify(refresh.refreshToken, config.get("common.refreshKey")) as any;
-        if (decoded.userid) {
-            let user = await this.repo.getone(decoded.userid);
-            if (user) {
-                return {
-                    accessToken: jwt.sign({ userid: user.userId, scope: ["user"], name: user.userName },
-                        config.get("common.accessKey"),
-                        {
-                            expiresIn: config.get("common.accessTimeout")
-                        }),
-                    refreshToken: jwt.sign({ userid: user.userId, scope: ["api"] },
-                        config.get("common.refreshKey"),
-                        {
-                            expiresIn: config.get("common.refreshTimeout")
-                        })
-                };
+    public async Refresh(@Body() refresh: { refreshToken: string }): Promise<{ accessToken: string | null, refreshToken: string | null }> {
+        try {
+            // Log the received refresh token
+            console.log("Received refresh token:", refresh.refreshToken);
+    
+            let decoded = jwt.verify(refresh.refreshToken, config.get("common.refreshKey")) as any;
+            if (decoded.userid) {
+                let user = await this.repo.getone(decoded.userid);
+                if (user) {
+                    return {
+                        accessToken: jwt.sign({ userid: user.userId, scope: ["user"], name: user.userName },
+                            config.get("common.accessKey"),
+                            {
+                                expiresIn: config.get("common.accessTimeout")
+                            }),
+                        refreshToken: jwt.sign({ userid: user.userId, scope: ["api"] },
+                            config.get("common.refreshKey"),
+                            {
+                                expiresIn: config.get("common.refreshTimeout")
+                            })
+                    };
+                }
             }
+            this.setStatus(400);
+            return { accessToken: null, refreshToken: null }
+        } catch (error) {
+            console.error("Error during token verification:", error);
+            throw error;
         }
-        this.setStatus(400);
-        return { accessToken: null, refreshToken: null }
     }
+    
 
     @Post("logout")
     @SuccessResponse(200, "Success")
@@ -100,14 +107,14 @@ export class AuthController extends Controller {
             const resetLink = `http://localhost:4200/reset-password?token=${token}`;
 
     
-            // Construct the email body with the reset link
+          
             const emailBody = `Click the following link to reset your password: ${resetLink}`;
     
-            // Send the email to the user's email address
+           
             await sendEmail({
                 to: data.email,
                 subject: "Password Reset Request",
-                text: emailBody, // Include the email body with the reset link
+                text: emailBody, 
                 from: config.get("emailer.from")
             });
             return { success: true }

@@ -16,20 +16,22 @@
 // }
 // product-list.component.ts
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductAddDialogService } from '../product-add-dialog.service';
-
+import { ProductServiceService } from '../product-service.service';
+import { ProductModel } from '../product.model';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent {
-  categories: string[] = ['Category 1', 'Category 2', 'Category 3']; // Sample categories
+export class ProductListComponent implements OnInit{
+  categories: string[] = [];
+  products: ProductModel[] = [];
   productForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private productAddDialogService: ProductAddDialogService) {
+  constructor(private formBuilder: FormBuilder,private productAddDialogService: ProductAddDialogService,private service:ProductServiceService) {
     this.productForm = this.formBuilder.group({
       productName: [''],
       productImage: [''],
@@ -39,9 +41,22 @@ export class ProductListComponent {
       productCategory: ['']
     });
   }
+
+  ngOnInit(){
+    // this.loadCategories();
+    this.service.getProducts().subscribe((products: ProductModel[]) => {
+      this.products = products;
+    });
+  }
   openProductAddDialog(): void {
         this.productAddDialogService.openProductAddDialog();
       }
+
+      // loadCategories():void{
+      //   this.service.getCategories().subscribe(categories => {
+      //     this.categories = categories;
+      //   });
+      // }
   submitForm() {
     // Handle form submission
   }

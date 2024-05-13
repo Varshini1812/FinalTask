@@ -32,9 +32,23 @@
     <!-- Add more filter options as needed -->
   </div>
 
-  <div>
-    <!-- Product list display -->
-    
+  <div class="row">
+    <div class="col-md-4" *ngFor="let product of products">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ product.productName }}</mat-card-title>
+         
+        </mat-card-header>
+        <img mat-card-image [src]="product.productImage" alt="Product Image">
+        <mat-card-content>
+         
+          <p>Category: {{ product.productCategory }}</p>
+          <p>Brand: {{ product.productBrand }}</p>
+          <p>Price: {{ product.productPrice }}</p>
+          <p>Ratings: {{ product.productRatings }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
  

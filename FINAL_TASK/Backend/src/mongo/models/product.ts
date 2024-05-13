@@ -9,6 +9,7 @@ export function initProductSchema() {
 
     const productSchema = new db.Schema<any>(
         {
+            productId: String,
             productName: String,
             productImage: String,
             productCategory: String,

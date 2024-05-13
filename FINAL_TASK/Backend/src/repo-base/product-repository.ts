@@ -1,4 +1,4 @@
-import { ProductModel } from "src/models/product";
+import { ProductModel } from "../models/product";
 
 export abstract class ProductRepository {
     abstract list(): Promise<Array<ProductModel>>;
@@ -6,4 +6,6 @@ export abstract class ProductRepository {
     abstract existsone(productId: string): Promise<boolean>;
     abstract create(product: ProductModel): Promise<ProductModel | null>;
     abstract update(product: ProductModel ): Promise<ProductModel | null>;
+   
+    // abstract fetchCategoriesFromMongo(): Promise<string[]>;
 }

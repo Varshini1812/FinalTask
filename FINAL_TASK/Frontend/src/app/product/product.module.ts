@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatCardModule} from '@angular/material/card'
 @NgModule({
   declarations: [
     ProductListComponent,
@@ -18,12 +18,14 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     ProductRoutingModule,
+    HttpClientModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
-    HttpClientModule
+    MatCardModule
+    
 
     
   ]

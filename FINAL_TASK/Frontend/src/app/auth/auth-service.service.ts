@@ -84,7 +84,11 @@ export class AuthServiceService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('accessToken');
+    if (typeof localStorage !== 'undefined') {
+      return !!localStorage.getItem('accessToken');
+    } else {
+      return false; 
+    }
   }
   getUsername(): string {
    

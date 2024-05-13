@@ -12,15 +12,12 @@ export class ProductServiceService {
 
   constructor(private http: HttpClient) {}
 
-  addProduct(productData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/product`, productData);
-  }
-  
-
  
-
-  getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>("https://freeapi.miniprojectideas.com/api/amazon/GetAllProducts");
+  addProduct(productData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/products`, productData);
+  }
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/products`);
   }
   getAllProductsByCategory(id: number): Observable<any[]> {
     return this.http.get<any[]>("https://freeapi.miniprojectideas.com/api/amazon/GetAllProductsByCategoryId?id="+ id);
@@ -34,23 +31,12 @@ export class ProductServiceService {
     return this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/RegisterCustomer", obj);
   }
 
-  login(obj: any) : Observable<any> {
-    return this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/Login", obj);
-  }
+  
 
-  addtoCart(obj: any) : Observable<any> {
-    return this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/AddToCart", obj);
-  }
+ 
 
-  getAddtocartdataByCust(id: number): Observable<any[]> {
-    return this.http.get<any[]>("https://freeapi.miniprojectideas.com/api/amazon/GetCartProductsByCustomerId?id="+ id);
-  }
-
-  removeProductFromCart(cartId: number): Observable<any[]> {
-    return this.http.get<any[]>("https://freeapi.miniprojectideas.com/api/amazon/DeleteProductFromCartById?id="+ cartId);
-  }
-
-  PlaceOrder(obj: any) : Observable<any> {
-    return this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/PlaceOrder", obj);
-  }
+  // getCategories(): Observable<string[]> {
+  //   return this.http.get<string[]>(`${this.apiUrl}/products/categories`);
+  // }
+  
 }

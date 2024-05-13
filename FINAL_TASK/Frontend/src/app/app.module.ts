@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration  } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -9,7 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { AuthInterceptorService } from './auth-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -30,7 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
 ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true } ,
+    provideHttpClient()
+
+
   ],
   bootstrap: [AppComponent]
 })

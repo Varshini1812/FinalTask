@@ -1,8 +1,8 @@
 import config from "config";
 import { UserRepository } from "../repo-base/user-repository";
 import { MongoUserRepository } from "../mongo/repository/user-repository";
-import { ProductRepository } from "src/repo-base/product-repository";
-import { MongoProductRepository } from "src/mongo/repository/product-repository";
+import { ProductRepository } from "../repo-base/product-repository";
+import { MongoProductRepository } from "../../src/mongo/repository/product-repository";
 import { Container } from "typescript-ioc";
 
 

@@ -1,5 +1,6 @@
-import { ProductModel } from "src/models/product";
-import { ProductRepository } from "src/repo-base/product-repository";
+
+import { ProductModel } from "../../models/product";
+import { ProductRepository } from "../../repo-base/product-repository";
 import { initProductSchema } from "../models/product";
 import mongoose from "mongoose";
 
@@ -52,4 +53,18 @@ export class MongoProductRepository extends ProductRepository {
         }
         return null;
     }
+    
+
+    // async fetchCategoriesFromMongo(): Promise<string[]> {
+    //     try {
+    //         const categories = await this.mongoModel.distinct("productCategory").exec();
+    //         return categories || [];
+    //     } catch (error) {
+    //         console.error('Error retrieving categories from MongoDB:', error);
+    //         throw new Error("Internal server error");
+    //     }
+    // }
+    
+    
+ 
 }

@@ -11,8 +11,8 @@ import {
     Security,
 } from "tsoa";
 import { Inject } from 'typescript-ioc';
-import { ProductRepository } from "src/repo-base/product-repository";
-import { ProductModel,ProductErrorType } from "src/models/product";
+import { ProductRepository } from "../repo-base/product-repository";
+import { ProductModel,ProductErrorType } from "../models/product";
 
 
 
@@ -31,7 +31,7 @@ export class ProductController extends Controller {
     @Get("{productId}")
     @SuccessResponse(200, "Success")
     @Response(404, "Not Found")
-    public async GetById(@Path(" productId")  productId: string): Promise<ProductModel | ProductErrorType > {
+    public async GetById(@Path("productId")  productId: string): Promise<ProductModel | ProductErrorType > {
         let x: ProductModel | null = await this.repo!.getone( productId);
         if (x == null) {
             this.setStatus(404);
@@ -68,4 +68,31 @@ export class ProductController extends Controller {
         }
         return x as ProductModel;
     }
+
+    // @Get("categories")
+    // @Response(200, "Success")
+    // @Response(404, "Not Found")
+    // public async getCategories(): Promise<string[] | { message: string }> {
+    //     try {
+    //         const categories = await this.fetchCategoriesFromRepository();
+    //         if (categories.length === 0) {
+    //             return { message: "Categories not found" };
+    //         }
+    //         return categories;
+    //     } catch (error) {
+    //         console.error("Error fetching categories:", error);
+    //         throw new Error("Internal server error");
+    //     }
+    // }
+    // async fetchCategoriesFromRepository(): Promise<string[]> {
+    //     try {
+    //         const categories = await this.repo!.fetchCategoriesFromMongo();
+    //         return categories || [];
+    //     } catch (error) {
+    //         console.error('Error retrieving categories from repository:', error);
+    //         throw new Error("Internal server error");
+    //     }
+    // }
+
+    
 }

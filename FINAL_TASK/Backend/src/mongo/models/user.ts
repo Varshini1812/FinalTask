@@ -9,6 +9,7 @@ export function initUserSchema() {
 
     const userSchema = new db.Schema<any>(
         {
+            
             userName: String,
             phone: { type: String, unique: true },
             email: { type: String, unique: true },
