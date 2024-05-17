@@ -16,6 +16,7 @@ export function initProductSchema() {
             productBrand: String,
             productPrice: Number,
             productRatings: Number,
+            
         }
     );
 

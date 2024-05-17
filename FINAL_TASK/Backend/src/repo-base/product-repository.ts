@@ -6,6 +6,8 @@ export abstract class ProductRepository {
     abstract existsone(productId: string): Promise<boolean>;
     abstract create(product: ProductModel): Promise<ProductModel | null>;
     abstract update(product: ProductModel ): Promise<ProductModel | null>;
-   
-    // abstract fetchCategoriesFromMongo(): Promise<string[]>;
+    abstract delete(productId: string): Promise<boolean>;
+    abstract getProducts(page: number, pageSize: number): Promise<{ products: ProductModel[]; totalItems: number }>
+    abstract getTotalProducts(): Promise<number>;
+    // abstract getCategories(): Promise<string[]>
 }

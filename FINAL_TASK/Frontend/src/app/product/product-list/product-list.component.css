@@ -1,0 +1,45 @@
+.txt{
+    color: rgb(240, 126, 32);
+  }
+
+
+.bg{
+  background-color: rgb(235, 146, 44);
+}
+
+.displayfont{
+  font-size: 60px;
+  font-weight: 600;
+}
+
+.display2{
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.card-with-shadow {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.product-image-container {
+  height: 30%;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.edit-button {
+  color: blue;
+}
+
+.delete-button {
+  color: red;
+}

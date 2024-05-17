@@ -1,58 +1,126 @@
 
 <app-header></app-header>
-<!-- product-list.component.html -->
-<hr>
-<div class="container">
+
+
+
   
-  <div>
-   
+  <!-- <div class="row mb-4">
+   <h1>Category</h1>
     <ul class="d-flex">
       <li *ngFor="let category of categories">
         <a href="#">{{ category }}</a>
       </li>
     </ul>
   </div>
-
-  
-
-  <div class="d-flex">
-   
-    <input type="text" placeholder="Search products...">
-    <button (click)="openProductAddDialog()" mat-raised-button color="primary">Add Product</button>
-  </div>
-
-  <div>
-    <h3>Filters</h3>
-    <!-- Include filter options here -->
-    <!-- Example: -->
-    <label>Brand:</label>
-    <input type="text">
-    <label>Ratings:</label>
-    <input type="number">
-    <!-- Add more filter options as needed -->
-  </div>
-
-  <div class="row">
-    <div class="col-md-4" *ngFor="let product of products">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{ product.productName }}</mat-card-title>
-         
-        </mat-card-header>
-        <img mat-card-image [src]="product.productImage" alt="Product Image">
-        <mat-card-content>
-         
-          <p>Category: {{ product.productCategory }}</p>
-          <p>Brand: {{ product.productBrand }}</p>
-          <p>Price: {{ product.productPrice }}</p>
-          <p>Ratings: {{ product.productRatings }}</p>
-        </mat-card-content>
-      </mat-card>
+<hr> -->
+<div class="container-fluid bg py-5 mb-3">
+  <div class="row" style="height: 312px;">
+    <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center gap-4">
+      <h2 class="text-white displayfont">FLAT 50% OFFER</h2>
+      <p class="text-white display2">Elevate Your Everyday</p>
+    </div>
+    <div class="col-lg-6 d-flex justify-content-center ">
+      <img src="../../../assets/ban2.png" alt="displayimg" style="max-width: 100%; height: auto;">
     </div>
   </div>
-
- 
 </div>
+
+<div class="container">
+  
+  <div class="row mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <input type="text" placeholder="Search products..." class="col-lg-6 fs-5 p-4 rounded-pill"    (input)="onSearchInputChange($event)">
+      <button (click)="openProductAddDialog()" mat-raised-button color="primary">Add Product</button>
+    </div>
+  </div>
+  <hr>
+  
+<div class="row py-2">
+
+  <div class="col-lg-3">
+    <h1 class="font-monospace txt">Filters</h1>
+    
+    <div class="row mb-4">
+      <mat-form-field appearance="fill">
+        <mat-label class="fs-4">Brand:</mat-label>
+        <mat-select [(ngModel)]="selectedBrand" (selectionChange)="applyFilters()" (selectionChange)="onBrandSelectionChange()">
+          <mat-option *ngFor="let brand of uniqueBrands()" [value]="brand">{{ brand }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div class="row mb-4">
+      <label for="starRatingFilter" class="fs-5 mb-3">Star Rating:</label>
+      <div id="starRatingFilter">
+        <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="setStarRatingFilter(star)">
+          <mat-icon>{{ star <= selectedStarRating ? 'star' : 'star_border' }}</mat-icon>
+        </span>
+      </div>
+    </div>
+  
+    
+    <div class="row mb-4">
+      <mat-form-field appearance="fill">
+        <mat-label class="fs-4">Max Price:</mat-label>
+        <input matInput type="number" id="maxPrice" [(ngModel)]="maxPrice" (change)="applyFilters()" (change)="onMaxPriceChange()" >
+      </mat-form-field>
+    </div>
+  </div>
+  
+    
+  
+
+  <div class="col-lg-9">
+    <div class="row d-flex-col">
+        <div class="col-lg-4" *ngFor="let product of filteredProducts">
+            <mat-card class="mb-5 p-2"> 
+               
+                
+
+              <div class="product-image-container">
+                <img [src]="getProductImageUrl(product.productImage)" alt="{{ product.productName }}">
+            </div>
+
+                <mat-card-header>
+                    <mat-card-title class="font-monospace fs-3 txt mb-2">{{ product.productName }}</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="lh-base">
+                    <p class="font-monospace fs-5">{{ product.productBrand }}</p>
+                    <p class="font-monospace fs-5 txt">Rs.{{ product.productPrice }}</p>
+                    <p>{{ getStarRating(product.productRatings) }}</p>
+                </mat-card-content>
+
+                <!-- Add to Cart Button -->
+                <div class="d-flex justify-content-between">
+                <mat-card-actions>
+                    <button mat-button color="primary" (click)="addToCart(product)" >Add to Cart</button>
+                </mat-card-actions>
+
+                <div class="card-icons">
+                  <button mat-icon-button (click)="editProduct(product)">
+                      <mat-icon class="edit-button">edit</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="deleteProduct(product)">
+                      <mat-icon class="delete-button">delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+        </div>
+        
+        <div class="d-flex jusitify-content-center align-items-center gap-1">
+          <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <button [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)">Next</button>
+        </div>
+        
+    </div>
+</div>
+
+</div>
+ 
+
 
 
 

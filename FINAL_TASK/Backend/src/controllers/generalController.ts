@@ -27,7 +27,9 @@ export class GeneralController extends Controller {
         let result = new Array<string>();
 
         for (const file of files) {
-            let filename = Array.from(crypto.randomBytes(4)).map(x => x.toString(16)).join("")
+            console.log(file)
+            let filename = Array.from(crypto.randomBytes(4)).map(x => 
+                x.toString(16)).join("")
                 + path.extname(file.originalname);
             let filepath = path.join(thePath, filename); 
                 

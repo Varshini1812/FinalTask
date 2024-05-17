@@ -19,12 +19,12 @@
             </li>
 
           </ul>
-        
-              
-         
+
+
+
           <div class="d-grid gap-2 d-md-flex">
             <ng-container *ngIf="isLoggedIn; then authenticatedUser; else unauthenticatedUser"></ng-container>
-          
+
             <ng-template #authenticatedUser>
               <!-- <ul class="navbar-nav d-flex align-items-center">
                 <li class="nav-item dropdown ">
@@ -46,40 +46,67 @@
               </ul> -->
               <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle fs-5" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgb(241, 134, 46); display: flex; align-items: center;">
+                  <a class="nav-link dropdown-toggle fs-5" href="#" id="navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"
+                    style="color: rgb(241, 134, 46); display: flex; align-items: center;">
                     <i class="fas fa-user fs-1" style="color: inherit; margin-right: 10px;"></i>{{ username }}
-                </a>
+                  </a>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item fs-5 font-monospace" href="#">Profile</a></li>
                     <li><a class="dropdown-item fs-5 font-monospace" (click)="logout()" href="#">Logout</a></li>
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  
+                  <button type="button" class=" nav-link btn " data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <img src="../../../assets/cart_icon.png" alt="cart" />
-                  </a>
+                    <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
+                      {{ cartItemCount }}
+                    </span>
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title font-monospace fs-3 txt" id="exampleModalLabel">Cart Items</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body ">
+                         <p class="font-monospace fs-5">Total Number of Items:{{cartItemCount}}</p>
+                        <p class="font-monospace fs-5">Total cost:Rs.{{this.totalCost}}</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               </ul>
-              
+
             </ng-template>
-          
+
             <ng-template #unauthenticatedUser>
               <ul class="nav">
                 <li class="nav-item">
-                  <a routerLink="/auth/login" class="nav-link fs-5 rounded-pill text-white p-3" role="button" style="background-color: rgb(241, 134, 46);">Login</a>
+                  <a routerLink="/auth/login" class="nav-link fs-5 rounded-pill text-white p-3" role="button"
+                    style="background-color: rgb(241, 134, 46);">Login</a>
                 </li>
               </ul>
             </ng-template>
           </div>
-          
-          
-    
-        </div>
+
 
 
         </div>
 
-      
+
+      </div>
+
+
 
       <button class="navbar-toggler border-0 fs-4" type="button" data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">

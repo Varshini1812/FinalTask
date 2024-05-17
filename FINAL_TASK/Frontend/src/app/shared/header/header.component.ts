@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import { AuthServiceService } from '../../auth/auth-service.service';
+import { CartServiceService } from '../../product/cart-service.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,6 +10,8 @@ import { AuthServiceService } from '../../auth/auth-service.service';
 export class HeaderComponent {
   isLoggedIn: boolean = false;
   username: string = '';
+  cartItemCount: number = 0;
+  totalCost: number = 0;
   // constructor() {}
   // constructor(private dialog: MatDialog,private service:AuthDialogService) {}
   // openSignInPopup() : void {
@@ -25,16 +28,26 @@ export class HeaderComponent {
   
   //   this.router.navigate(['/auth/logout']);
   // }
-  constructor(private authService:AuthServiceService) { }
+  constructor(private authService:AuthServiceService,private cartService: CartServiceService) { }
 
   ngOnInit(): void {
-    console.log("ngOnInit executed"); // Add this line
+    console.log("ngOnInit executed"); 
     this.isLoggedIn = this.authService.isLoggedIn();
-    console.log("isLoggedIn:", this.isLoggedIn); // Log the value of isLoggedIn
+  
     if (this.isLoggedIn) {
       this.username = this.authService.getUsername(); 
       console.log("username:", this.username);
     }
+    this.cartService.cartItemAdded.subscribe(() => {
+      this.updateCartInfo();
+    });
+
+   
+    this.updateCartInfo();
+  }
+  private updateCartInfo() {
+    this.cartItemCount = this.cartService.getCartItemCount();
+    this.totalCost = this.cartService.getTotalCost();
   }
   
   

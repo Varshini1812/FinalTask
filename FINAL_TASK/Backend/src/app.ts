@@ -6,6 +6,7 @@ import { RegisterRoutes } from "../build/routes";
 import { logger, setUpMorgan } from "./utils/app-logger";
 import { nocache } from "./utils/nocache";
 import { RegisterClasses } from "./utils/general";
+const cors = require('cors');
 import 'localstorage-polyfill'
 export const app = express();
 const config = require('config');
@@ -14,7 +15,7 @@ app.use(nocache());
 useCors(app);
 setUpMorgan(app);
 
-
+app.use(cors());
 global['localStorage'] = localStorage;
 app.use(
     bodyParser.urlencoded({
