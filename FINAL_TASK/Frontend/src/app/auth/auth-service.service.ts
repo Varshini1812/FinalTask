@@ -82,15 +82,7 @@ export class AuthServiceService {
     localStorage.removeItem('username');
     return this.http.post<any>(`${this.baseUrl}/auth/logout`, {});
   }
-  getUserId(): string | null {
-    
-    const token = localStorage.getItem('token');
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.userId;
-    }
-    return null;
-  }
+
   isLoggedIn(): boolean {
     if (typeof localStorage !== 'undefined') {
       return !!localStorage.getItem('accessToken');
@@ -101,5 +93,10 @@ export class AuthServiceService {
   getUsername(): string {
    
     return localStorage.getItem('username') || '';
+  }
+
+  getUserId(): string | null {
+    
+    return localStorage.getItem('userId');
   }
 }

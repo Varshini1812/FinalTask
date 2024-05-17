@@ -329,9 +329,9 @@ onSearchInputChange(event: Event) {
       this.router.navigate(['/auth/login']);
     }
   }
-  editProduct(product: ProductModel): void {
+editProduct(product: ProductModel): void {
     if (!this.isLoggedIn) {
-      this.router.navigateByUrl('/auth/login'); 
+      this.router.navigateByUrl('/auth/login'); // Navigate to login page if not logged in
       return;
     }
     const dialogRef = this.dialog.open(ProductAddComponent, {
@@ -378,19 +378,24 @@ onSearchInputChange(event: Event) {
   //     duration: 3000
   //   });
   // }
+
   addToCart(product: any): void {
-    const userId = this.authService.isLoggedIn() ? this.authService.getUserId() : ''; 
-    if (!userId) {
-        this.router.navigateByUrl('/auth/login'); 
-        return;
+    if (!this.isLoggedIn) {
+      this.router.navigateByUrl('/auth/login');
+      return;
     }
-    const productWithUserId = { ...product, userId };
-    this.cartService.addToCart(userId, productWithUserId);
     
+  
+    this.cartService.addToCart(product);
+    const cartItems = this.cartService.getCartItems();
+    const totalItems = cartItems.length;
+    const totalCost = cartItems.reduce((total, item) => total + item.productPrice, 0);
+    const userId = this.authService.getUserId(); 
+    this.cartService.emitCartDetails({ totalItems, totalCost, userId });
     this.snackBar.open('Product added to cart', 'Close', {
-        duration: 3000
+      duration: 3000
     });
-}
+  }
 
   
   getStarRating(rating: number): string {
